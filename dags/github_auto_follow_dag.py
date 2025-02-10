@@ -37,14 +37,14 @@ def auto_follow_back():
         try:
             user_to_follow = g.get_user(username)
             user.add_to_following(user_to_follow)
-            print(f"Successfully followed {username}")
+            print("Successfully followed {}".format(username))
         except Exception as e:
-            print(f"Failed to follow {username}: {str(e)}")
+            print("Failed to follow {}: {}".format(username, str(e)))
 
 with DAG(
     'github_auto_follow',
     default_args=default_args,
-    description='자동으로 GitHub 팔로워를 팔로우하는 DAG',
+    description='DAG to automatically follow GitHub followers',
     schedule_interval='@daily',
     catchup=False
 ) as dag:
