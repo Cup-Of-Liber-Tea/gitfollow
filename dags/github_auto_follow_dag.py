@@ -16,23 +16,23 @@ default_args = {
 }
 
 def auto_follow_back():
-    # GitHub 토큰으로 인증
+    # Authenticate with GitHub token
     github_token = os.getenv('GITHUB_ACCESS_TOKEN')
     g = Github(github_token)
     
-    # 자신의 계정 정보 가져오기
+    # Get user information
     user = g.get_user()
     
-    # 현재 팔로워 목록 가져오기
+    # Get current followers
     followers = set(follower.login for follower in user.get_followers())
     
-    # 현재 팔로잉 목록 가져오기
+    # Get current following
     following = set(following.login for following in user.get_following())
     
-    # 팔로우하지 않은 팔로워 찾기
+    # Find followers who are not followed back
     users_to_follow = followers - following
     
-    # 팔로우하지 않은 사용자들 자동 팔로우
+    # Automatically follow users who are not followed back
     for username in users_to_follow:
         try:
             user_to_follow = g.get_user(username)
